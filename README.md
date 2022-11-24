@@ -10,3 +10,4 @@
 
 # Link de la pagina: 
 # Link de Trello: https://trello.com/b/waXiGwRT/grupo-4-proyecto-final-rolling
+# Link del repositorio (FRONTEND): https://github.com/JonasBusto/Proyecto_3_Grupo4
