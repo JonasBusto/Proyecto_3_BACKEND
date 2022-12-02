@@ -10,12 +10,14 @@ router
       body("namePlace", "Campo namePlace requerido").notEmpty(),
       body("province", "Campo namePlace requerido").notEmpty(),
       body("category", "Campo namePlace requerido").notEmpty(),
-      body("img", "Campo namePlace requerido").notEmpty(),
-      body("contLikes", "Campo namePlace requerido").notEmpty(),
-      body("featured", "Campo namePlace requerido").notEmpty(),
+      body("img", "Objeto requerido").notEmpty(),
+      body("description", "Se requiere una descripcion.").notEmpty(),
     ],
     placeController.addPlace
   )
   .get("/consultPlace", placeController.consultPlaces)
   .put("/modPlace/:id", placeController.modPlaces)
+  .put("/modPlaceDescription/:id", placeController.modPlacesDescription)
+  .put("/modPlaceImg/:id", placeController.modPlacesImg);
+
 module.exports = router;

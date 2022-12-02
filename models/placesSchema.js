@@ -48,13 +48,18 @@ const placeSchema = new mongoose.Schema({
     type: Number,
     trim: true,
     require: true,
-    default:0
+    default: 0,
   },
   featured: {
     type: Boolean,
     trim: true,
     require: true,
-    default:false
+    default: false,
+  },
+  description: {
+    type: String,
+    trim: true,
+    require: true,
   },
 });
 
