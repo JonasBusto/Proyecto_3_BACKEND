@@ -1,6 +1,8 @@
 const { validationResult } = require("express-validator");
 const UserModel = require("../models/userSchema");
-const UserLogueado = require("../models/userLogueadoSchema");
+const bcryptjs = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const JWT_SECRET = "paranguatiricutirimicuaro";
 
 exports.registerUser = async (req, res) => {
   const userFound = await UserModel.findOne({ email: req.body.email });
@@ -14,9 +16,19 @@ exports.registerUser = async (req, res) => {
     if (userFound) {
       res.status(400).json({ mgs: "Usuario duplicado" });
     } else {
-      const userCreate = new UserModel(req.body);
+      const salt = await bcryptjs.genSalt(8);
+      const passEncrypt = await bcryptjs.hash(req.body.password, salt);
+
+      const objectUser = {
+        name: req.body.name,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: passEncrypt,
+      };
+
+      const userCreate = new UserModel(objectUser);
       userCreate.save();
-      res.send("Usuario registrado");
+      res.status(200).json({ message: "Usuario registrado" });
     }
   } catch (error) {
     res.status(500).json({ message: "Error - ", error });
@@ -24,29 +36,66 @@ exports.registerUser = async (req, res) => {
 };
 
 exports.loginUser = async (req, res) => {
-  const emailFound = await UserModel.findOne({ email: req.body.email });
-  const passFound = await UserModel.findOne({ password: req.body.password });
-  console.log("emailFound: ", emailFound._id);
-  console.log("emailFound: ", emailFound.name);
-  console.log("emailFound: ", emailFound.lastName);
-  console.log("emailFound: ", emailFound.email);
-  console.log("emailFound: ", emailFound.password);
+  const { email, password } = req.body;
 
-  try {
-    if (emailFound !== null && passFound !== null) {
-      const userLog = new UserLogueado({
-        _id: emailFound._id,
-        name: emailFound.name,
-        lastName: emailFound.lastName,
-        email: emailFound.email,
-        pass: emailFound.password,
-      });
-      userLog.save();
-      res.send("Usuario encontrado en la DB");
-    } else {
-      res.send("Usuario no encontrado en la DB");
-    }
-  } catch (error) {
-    res.status(500).json({ message: "Error login server - ", error });
+  const userFound = await UserModel.findOne({ email });
+
+  if (!userFound) {
+    return res.json({ error: "Usuario no encontrado en la DB" });
   }
+
+  if (await bcryptjs.compare(password, userFound.password)) {
+    const userToken = {
+      user: {
+        id: userFound.id,
+        name: userFound.name,
+        lastName: userFound.lastName,
+        email: userFound.email,
+      },
+    };
+    const token = jwt.sign(userToken, JWT_SECRET);
+    userFound.token = token;
+    await UserModel.updateOne({ email }, userFound);
+    res.status(200).json(userFound);
+  }
+};
+
+exports.logout = async (req, res) => {
+  const { token } = req.body;
+  if (token) {
+    const userLog = jwt.verify(token, JWT_SECRET);
+    const userEmail = userLog.user.email;
+    const userFound = await UserModel.findOne({ userEmail });
+    if (userFound) {
+      userFound.token = "";
+      await UserModel.updateOne({ userEmail }, userFound);
+      res.status(200).json({ message: "Deslogueado", deslog: userFound });
+    } else {
+      res.status(500).json({ error: "Error" });
+    }
+  } else {
+    res.status(500).json({ error: "Error" });
+  }
+};
+
+exports.userDataLog = async (req, res) => {
+  const { token } = req.body;
+  if (token) {
+    const userLog = jwt.verify(token, JWT_SECRET);
+    // console.log("userlog: ", userLog);
+    if (userLog) {
+      const userEmail = userLog.user.email;
+      const userFound = await UserModel.findOne({ email: userEmail });
+      res.status(200).json(userFound);
+    } else {
+      res.status(400).json({ message: "No encontrado" });
+    }
+  } else {
+    res.json({});
+  }
+};
+
+exports.consultUsers = async (req, res) => {
+  const users = await UserModel.find();
+  res.send(users);
 };
