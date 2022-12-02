@@ -2,7 +2,7 @@ const { validationResult } = require("express-validator");
 const UserModel = require("../models/userSchema");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = "paranguatiricutirimicuaro";
+const JWT_SECRET = "proyecto3grupo4";
 
 exports.registerUser = async (req, res) => {
   const userFound = await UserModel.findOne({ email: req.body.email });
