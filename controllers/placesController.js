@@ -28,3 +28,13 @@ exports.consultPlaces = async (req, res) => {
   const places = await PlacesModel.find();
   res.send(places);
 };
+
+exports.modPlaces = async (req, res) => {
+  const placeFound = await PlacesModel.findOneAndUpdate(
+    {_id: req.params.id},
+    {province: req.body.province,
+    category: req.body.category},
+    {new:true}
+  );
+  res.send(placeFound)
+}
