@@ -16,6 +16,8 @@ router
     ],
     placeController.addPlace
   )
-  .get("/consultPlace", placeController.consultPlaces);
+  .get("/consultPlace", placeController.consultPlaces)
+  .get("/consultPlace/:id", placeController.consultPlaceId)
+  .put("/modPlace/:id", placeController.modPlaces);
 
 module.exports = router;
