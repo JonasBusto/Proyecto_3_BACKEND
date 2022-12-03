@@ -18,19 +18,43 @@ const placeSchema = new mongoose.Schema({
     require: true,
   },
   img: {
-    type: String,
-    trim: true,
-    require: true,
+    img1: {
+      type: String,
+      trim: true,
+      require: true,
+    },
+    img2: {
+      type: String,
+      trim: true,
+      require: true,
+    },
+    img3: {
+      type: String,
+      trim: true,
+      require: true,
+    },
+    img4: {
+      type: String,
+      trim: true,
+      require: true,
+    },
+    img5: {
+      type: String,
+      trim: true,
+      require: true,
+    },
   },
   contLikes: {
     type: Number,
     trim: true,
     require: true,
+    default: 0,
   },
   featured: {
     type: Boolean,
     trim: true,
     require: true,
+    default: false,
   },
 });
 
