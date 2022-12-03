@@ -10,7 +10,7 @@ exports.addProvince = async (req, res) => {
     res.status(400).json({ msg: "Provincia existente en db." });
   } else {
     const provinceCreate = new ProvinceModel({
-      namePlace: namePlace,
+      nameProvince: nameProvince,
       type: type,
       img: img,
     });
