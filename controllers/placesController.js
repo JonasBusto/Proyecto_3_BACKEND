@@ -73,6 +73,6 @@ exports.addComment = async (req, res) => {
     },
     { new: true }
   );
-  res.send(placeFound.comments);
+  res.status(200).json(placeFound);
 };
 //
