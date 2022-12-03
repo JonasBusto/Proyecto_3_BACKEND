@@ -20,7 +20,7 @@ exports.addPlace = async (req, res) => {
         img4: req.body.img.img4,
         img5: req.body.img.img5,
       },
-      description: req.body.description
+      description: req.body.description,
     };
     const placeCreate = new PlacesModel(newPlace);
     placeCreate.save();
@@ -66,7 +66,7 @@ exports.modPlacesDescription = async (req, res) => {
     { description: req.body.description },
     { new: true }
   );
-  res.send(placeFound);
+  res.status(200).json(placeFound);
 };
 
 exports.modPlacesImg = async (req, res) => {
