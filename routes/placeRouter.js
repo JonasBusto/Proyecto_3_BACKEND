@@ -18,6 +18,7 @@ router
   )
   .get("/consultPlace", placeController.consultPlaces)
   .get("/consultPlace/:id", placeController.consultPlaceId)
-  .put("/modPlace/:id", placeController.modPlaces);
+  .put("/modPlace/:id", placeController.modPlaces)
+  .delete("/deletePlace/:id", placeController.deletePlace);
 
 module.exports = router;

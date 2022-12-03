@@ -46,3 +46,14 @@ exports.modPlaces = async (req, res) => {
   );
   res.send(placeFound);
 };
+
+exports.deletePlace = async (req, res) => {
+  try {
+    await PlacesModel.findOneAndDelete({ _id: req.params.id });
+    res.status(200).json({ message: "Lugar eliminado" });
+  } catch (error) {
+    res.status(500)({
+      error: error + " - el usuario que intenta eliminar no existe",
+    });
+  }
+};
