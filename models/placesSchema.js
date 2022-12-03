@@ -56,6 +56,10 @@ const placeSchema = new mongoose.Schema({
     require: true,
     default: false,
   },
+  comments: {
+    type: Array,
+    default: [],
+  },
 });
 
 module.exports = mongoose.model("place", placeSchema);

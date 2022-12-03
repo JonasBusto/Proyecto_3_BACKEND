@@ -57,3 +57,21 @@ exports.deletePlace = async (req, res) => {
     });
   }
 };
+
+exports.addComment = async (req, res) => {
+  const placeFound = await PlacesModel.findOneAndUpdate(
+    { _id: req.params.id },
+    {
+      $push: {
+        comments: {
+          userComment: req.body.user,
+          userProfileComment: req.body.userProfile,
+          dateComment: req.body.date,
+          infoComment: req.body.infoComment,
+        },
+      },
+    },
+    { new: true }
+  );
+  res.send(placeFound.comments);
+};
