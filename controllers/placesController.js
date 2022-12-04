@@ -47,6 +47,32 @@ exports.modPlaces = async (req, res) => {
   res.send(placeFound);
 };
 
+exports.modPlacesDescription = async (req, res) => {
+  const placeFound = await PlacesModel.findOneAndUpdate(
+    { _id: req.params.id },
+    { description: req.body.description },
+    { new: true }
+  );
+  res.status(200).json(placeFound);
+};
+
+exports.modPlacesImg = async (req, res) => {
+  const placeFound = await PlacesModel.findOneAndUpdate(
+    { _id: req.params.id },
+    {
+      img: {
+        img1: req.body.img1,
+        img2: req.body.img2,
+        img3: req.body.img3,
+        img4: req.body.img4,
+        img5: req.body.img5,
+      },
+    },
+    { new: true }
+  );
+  res.send(placeFound);
+};
+
 exports.deletePlace = async (req, res) => {
   try {
     await PlacesModel.findOneAndDelete({ _id: req.params.id });
@@ -75,4 +101,3 @@ exports.addComment = async (req, res) => {
   );
   res.status(200).json(placeFound);
 };
-//
