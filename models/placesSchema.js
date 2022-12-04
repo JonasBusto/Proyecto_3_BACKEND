@@ -17,6 +17,11 @@ const placeSchema = new mongoose.Schema({
     trim: true,
     require: true,
   },
+  description: {
+    type: String,
+    trim: true,
+    require: true,
+  },
   img: {
     img1: {
       type: String,
