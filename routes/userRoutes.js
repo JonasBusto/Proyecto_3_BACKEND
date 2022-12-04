@@ -54,6 +54,8 @@ router
   )
   .post("/userLog", userController.userDataLog)
   .post("/logout", userController.logout)
-  .get("/consultUsers", userController.consultUsers);
+  .get("/consultUsers", userController.consultUsers)
+  .put("/userLogModImg", userController.userDataLogModImg)
+  .put("/userLogModName", userController.userDataLogModName);
 
 module.exports = router;

@@ -82,10 +82,49 @@ exports.userDataLog = async (req, res) => {
   const { token } = req.body;
   if (token) {
     const userLog = jwt.verify(token, JWT_SECRET);
-    // console.log("userlog: ", userLog);
     if (userLog) {
       const userEmail = userLog.user.email;
       const userFound = await UserModel.findOne({ email: userEmail });
+      res.status(200).json(userFound);
+    } else {
+      res.status(400).json({ message: "No encontrado" });
+    }
+  } else {
+    res.json({});
+  }
+};
+
+exports.userDataLogModImg = async (req, res) => {
+  const { token } = req.body;
+  if (token) {
+    const userLog = jwt.verify(token, JWT_SECRET);
+    if (userLog) {
+      const userEmail = userLog.user.email;
+      const userFound = await UserModel.findOneAndUpdate(
+        { email: userEmail },
+        { photoProfile: req.body.photoProfile },
+        { new: true }
+      );
+      res.status(200).json(userFound);
+    } else {
+      res.status(400).json({ message: "No encontrado" });
+    }
+  } else {
+    res.json({});
+  }
+};
+
+exports.userDataLogModName = async (req, res) => {
+  const { token } = req.body;
+  if (token) {
+    const userLog = jwt.verify(token, JWT_SECRET);
+    if (userLog) {
+      const userEmail = userLog.user.email;
+      const userFound = await UserModel.findOneAndUpdate(
+        { email: userEmail },
+        { name: req.body.name, lastName: req.body.lastName },
+        { new: true }
+      );
       res.status(200).json(userFound);
     } else {
       res.status(400).json({ message: "No encontrado" });
