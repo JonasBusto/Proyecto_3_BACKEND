@@ -22,6 +22,7 @@ router
   .delete("/deletePlace/:id", placeController.deletePlace)
   .put("/addComment/:id", placeController.addComment)
   .put("/modPlaceDescription/:id", placeController.modPlacesDescription)
-  .put("/modPlaceImg/:id", placeController.modPlacesImg);
+  .put("/modPlaceImg/:id", placeController.modPlacesImg)
+  .put("/featuredPlace/:id", placeController.featuredPlace);
 
 module.exports = router;

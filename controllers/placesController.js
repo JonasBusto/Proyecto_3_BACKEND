@@ -101,3 +101,12 @@ exports.addComment = async (req, res) => {
   );
   res.status(200).json(placeFound);
 };
+
+exports.featuredPlace = async (req, res) => {
+  const placeFound = await PlacesModel.findOneAndUpdate(
+    { _id: req.params.id },
+    { featured: req.body.featured },
+    { new: true }
+  );
+  res.status(200).json(placeFound);
+};
