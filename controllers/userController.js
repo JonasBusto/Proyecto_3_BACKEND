@@ -27,8 +27,8 @@ exports.registerUser = async (req, res) => {
       };
 
       const userCreate = new UserModel(objectUser);
-      userCreate.save();
-      res.status(200).json({ message: "Usuario registrado" });
+      await userCreate.save();
+      res.status(201).json({ message: "Usuario registrado" });
     }
   } catch (error) {
     res.status(500).json({ message: "Error - ", error });
