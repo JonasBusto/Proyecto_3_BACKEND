@@ -17,3 +17,8 @@ exports.showComments = async (req, res) => {
   const comments = await CommentsModel.find();
   res.send(comments);
 };
+
+exports.deleteComment = async (req, res) => {
+  await CommentsModel.findByIdAndDelete({ _id: req.body.id });
+  res.status(200).json({ status: "ok" });
+};

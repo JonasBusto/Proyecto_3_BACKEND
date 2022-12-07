@@ -5,6 +5,7 @@ const { body } = require("express-validator");
 
 router
   .post("/addCommentHome", commentController.addComment)
-  .get("/showComments", commentController.showComments);
+  .get("/showComments", commentController.showComments)
+  .delete("/deleteComment", commentController.deleteComment);
 
 module.exports = router;
