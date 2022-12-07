@@ -56,7 +56,9 @@ exports.loginUser = async (req, res) => {
     const token = jwt.sign(userToken, JWT_SECRET);
     userFound.token = token;
     await UserModel.updateOne({ email }, userFound);
-    res.status(200).json(userFound);
+    res.status(200).json({ status: "ok", user: userFound });
+  } else {
+    res.status(400).json({ status: "error" });
   }
 };
 
