@@ -4,6 +4,6 @@ const contactMessageController = require("../controllers/contactMessageControlle
 
 router
   .post("/addContactMessage", contactMessageController.addContactMessage)
-  // .get("/showContactMessage", contactMessageController.showContactMessage);
+  .get("/showContactMessage", contactMessageController.showContactMessage);
 
 module.exports = router;

@@ -18,7 +18,7 @@ exports.addContactMessage = async (req, res) => {
     });
 };
 
-// exports.showContactMessage = async (req, res) => {
-//   const contactMessage = await ContactMessageModel.find();
-//   res.send(contactMessage);
-// };
+exports.showContactMessage = async (req, res) => {
+  const contactMessage = await ContactMessageModel.find();
+  res.send(contactMessage);
+};
