@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-const sendMailer = async () => {
+const sendMailer = async (name, email, contactMessage) => {
   const config = {
     host: "smtp.gmail.com",
     port: 587,
@@ -13,14 +13,19 @@ const sendMailer = async () => {
   const message = {
     from: "gruporeactfinal@gmail.com",
     to: "gruporeactfinal@gmail.com",
-    subjet: "Consulta de contacto.",
-    text: "Mensaje de la consulta de contacto",
+    subject: "Consulta de contacto.",
+    html: `<h2>Mensaje de consulta de ${name} para responder a ${email} dentro de las próximas 48hs hábiles</h2>
+    <br><br><br>        
+    <p>${contactMessage}</p>
+    <br><br><br>
+    <h4>Fin del mensaje de contacto.</h4>
+    `,
   };
 
   try {
     const transport = nodemailer.createTransport(config);
-    const info = await transport.sendMail(message);
-    console.log(info)
+    const info = transport.sendMail(message);
+    console.log(info);
   } catch (error) {
     console.log("error", error);
   }

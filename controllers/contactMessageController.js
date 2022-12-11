@@ -10,12 +10,10 @@ exports.addContactMessage = async (req, res) => {
 
   const contactMessageCreate = new ContactMessageModel(newContactMessage);
   contactMessageCreate.save();
-  sendMailer();
-  res
-    .status(200)
-    .json({
-      message: "Mensaje de contacto cargado en la db y enviado al mail.",
-    });
+  await sendMailer(req.body.name, req.body.email, req.body.message);
+  res.status(200).json({
+    message: "Mensaje de contacto cargado en la db y enviado al mail.",
+  });
 };
 
 exports.showContactMessage = async (req, res) => {
