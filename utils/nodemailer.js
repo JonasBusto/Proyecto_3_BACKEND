@@ -27,7 +27,7 @@ const sendMailer = async (name, email, contactMessage) => {
     const info = transport.sendMail(message);
     console.log(info);
   } catch (error) {
-    console.log("error", error);
+    res.status(500).json({ error: error });
   }
 };
 
